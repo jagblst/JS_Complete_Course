@@ -34,3 +34,13 @@ GOOD LUCK 😀
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
+document.querySelector('button').addEventListener('click', () => {
+  const text = document.querySelector('textarea').value;
+  const rows =  text.toLowerCase().split('\n');
+
+  for (const [i, row] of rows.entries()){
+    const [first, second] = row.trim().split('_');
+    let out = `${first}${second.replace(second[0], second[0].toUpperCase())}`;
+    console.log(`${out.padEnd(20)}${'✅'.repeat(i + 1)}`);
+  }
+});
