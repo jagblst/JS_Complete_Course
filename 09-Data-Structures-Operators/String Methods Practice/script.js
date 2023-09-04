@@ -9,3 +9,11 @@ const flights =
 //              Arrival from BRU to FAO (11h45)
 //   🔴 Delayed Arrival from HEL to FAO (12h05)
 //            Departure from FAO to LIS (12h30)
+
+const format = str => str.slice(0, 3).toLocaleUpperCase();
+
+for (const str of flights.split('+')) {
+  let [type, from, to, time] = str.split(';');
+  let res = `${type.startsWith('_Delayed') ? `🔴` : ' '}${type.replaceAll('_', ' ')} from ${format(from)} to ${format(to)} (${time.replace(':', 'h')})`.padStart(44);
+  console.log(res);
+}
