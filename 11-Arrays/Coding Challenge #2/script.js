@@ -18,3 +18,20 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
+const calcAverageHumanAge = (ages) => {
+    // 1.
+    const humanAge = ages.map(age => age <= 2 ? age * 2 : age * 4 + 16);
+    console.log(humanAge);
+
+    // 2.
+    const adultDogs = humanAge.filter(age => age >= 18);
+    console.log(adultDogs);
+
+    // 3.
+    const averageAdultsAge = adultDogs.reduce((acc, cur) => acc + cur) / adultDogs.length;
+    console.log(averageAdultsAge);
+}
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+console.log(`===================================`);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
