@@ -1,6 +1,51 @@
 'use strict';
 
-// prettier-ignore
+class Workout {
+    date = new Date();
+    id = (Date.now() + '').slice(-10);
+  
+    constructor(coords, distance, duration) {
+      this.coords = coords; // [lat, lng]
+      this.distance = distance; // in km
+      this.duration = duration; // in min
+    }
+}
+
+class Running extends Workout {
+    type = 'running';
+  
+    constructor(coords, distance, duration, cadence) {
+      super(coords, distance, duration);
+      this.cadence = cadence;
+      this.calcPace();
+    }
+  
+    calcPace() {
+      // min/km
+      this.pace = this.duration / this.distance;
+      return this.pace;
+    }
+}
+  
+class Cycling extends Workout {
+    type = 'cycling';
+
+    constructor(coords, distance, duration, elevationGain) {
+        super(coords, distance, duration);
+        this.elevationGain = elevationGain;
+        this.calcSpeed();
+    }
+
+    calcSpeed() {
+        // km/h
+        this.speed = this.distance / (this.duration / 60);
+        return this.speed;
+    }
+}
+  
+//   const run1 = new Running([39, -10], 5.2, 24, 178);
+//   const cycling1 = new Cycling([34, -12], 27, 95, 523);
+//   console.log(run1, cycling1);
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const form = document.querySelector('.form');
