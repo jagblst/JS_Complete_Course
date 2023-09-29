@@ -1,5 +1,26 @@
 'use strict';
 
+const countriesContainer = document.querySelector('.countries');
+
+const renderCountry = function(data) {
+  const html = `
+  <article class="country">
+    <img class="country__img" src="${data.flags.png}" />
+    <div class="country__data">
+      <h3 class="country__name">${data.name.official}</h3>
+      <h4 class="country__region">${data.region}</h4>
+      <p class="country__row"><span>👫</span>${(
+        +data.population / 1000000
+      ).toFixed(1)} millions of people</p>
+      <p class="country__row"><span>🗣️</span>${Object.values(data.languages)}</p>
+      <p class="country__row"><span>💰</span>${Object.values(data.currencies)[0].name}</p>
+    </div>
+  </article>
+  `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
+
 ///////////////////////////////////////
 // Coding Challenge #1
 
@@ -26,3 +47,26 @@ TEST COORDINATES 2: -33.933, 18.474
 
 GOOD LUCK 😀
 */
+
+function whereAmI(lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+      return res.json();
+    })
+    .then(data => {console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}`)
+      return fetch(`https://restcountries.com/v3.1/name/${data.country}`)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Country not found (${res.status})`);
+      return res.json();
+    })
+    .then(data => {console.log(data[0])
+    renderCountry(data[0])})
+    .catch(err => console.error(err.message));
+}
+
+whereAmI(-33.865, 151.209);
+whereAmI(50.455, 30.523);
+whereAmI(37.773, -122.431);
